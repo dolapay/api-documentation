@@ -2,7 +2,7 @@
 Temporary home for Dola's API Documentation.
 
 ## Order API Specification
-
+`Base URL: https://api.dola.me/api`
 ### Authorization
 
 Provide your Dola API Key in the following header:
