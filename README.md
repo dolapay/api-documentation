@@ -186,7 +186,7 @@ This marks an order as fulfilled, given the tracking url is in the request body.
 
 ```json
 {
-    tracking_url: https://tracking-service.net/ksjdogiei32234kred
+    "tracking_url": "https://tracking-service.net/ksjdogiei32234kred"
 }
 ```
 
