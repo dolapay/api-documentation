@@ -5,7 +5,7 @@ This is Dola's temporary API documentation; furthermore, our developer portal wi
 
 ### API Reference
 
-The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts [form-encoded](https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms) request bodies, returns [JSON-encoded](http://www.json.org/) responses, and uses standard HTTP response codes, authentication, and verbs.
+The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts and returns [JSON-encoded](http://www.json.org/) request and response bodies, and uses standard HTTP response codes, authentication, and verbs.
 
 :link: `Base URL: https://api.dola.me/api`
 ### Authorization
