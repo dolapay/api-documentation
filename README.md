@@ -1,16 +1,33 @@
-# Dola API Documentation
-Temporary home for Dola's API Documentation.
+# Dola's API Documentation
+This is Dola's temporary API documentation; furthermore, our developer portal will be released in March (2021).
 
-## Order API Specification
-`Base URL: https://api.dola.me/api`
+## Basics
+
+### API Reference
+
+The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts [form-encoded](https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms) request bodies, returns [JSON-encoded](http://www.json.org/) responses, and uses standard HTTP response codes, authentication, and verbs.
+
+:link: `Base URL: https://api.dola.me/api`
 ### Authorization
-Authenticate requests using your Dola API key. Navigate to Settings > Developers on your wallet to copy this key. It has the following prefix `dola_pay_`.
 
-Please ensure that this key is kept secret as it carries many privileges and in the event of a compromise be sure to refresh it on your wallet.
+The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet. Note, only accounts with an approved Merchant Application are provided API keys. To submit a Merchant Application, go Settings in your Dola Wallet and click Apply.
+
+Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
+
+Each API key has the following prefix: `dola_pay_`.
 
 Provide your Dola API Key in the following header:
 
 `DOLA-API-KEY: {Your dola API Key}`
+
+## Orders
+
+Available endpoints:
+
+* [Get All Orders](#get-all-orders)
+* [Get Order](#get-order)
+* [Update Order](#update-order)
+* [Delete Order](#delete-order)
 
 ### Get All Orders
 
