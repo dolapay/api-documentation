@@ -16,9 +16,9 @@ Your API keys carry many privileges, so be sure to keep them secure! Do not shar
 
 Each API key has the following prefix: `dola_pay_`.
 
-Provide your Dola API Key in the following header:
+Provide your API Key in the following header:
 
-`DOLA-API-KEY: {Your dola API Key}`
+:warning: `DOLA-API-KEY: {Your dola API Key}`
 
 ## Orders
 
