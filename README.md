@@ -4,6 +4,9 @@ Temporary home for Dola's API Documentation.
 ## Order API Specification
 `Base URL: https://api.dola.me/api`
 ### Authorization
+Authenticate requests using your Dola API key. Navigate to Settings > Developers on your wallet to copy this key. It has the following prefix `dola_pay_`.
+
+Please ensure that this key is kept secret as it carries many privileges and in the event of a compromise be sure to refresh it on your wallet.
 
 Provide your Dola API Key in the following header:
 
