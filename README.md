@@ -184,7 +184,11 @@ Sample response:
 
 This marks an order as fulfilled, given the tracking url is in the request body.
 
-`tracking_url: orderlocation.net`
+```json
+{
+    tracking_url: https://tracking-service.net/ksjdogiei32234kred
+}
+```
 
 Sample response:
 
