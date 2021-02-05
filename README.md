@@ -102,7 +102,7 @@ Sample response:
 
 ### Get Order
 
-`GET /order/{order id}`
+`GET /order/{orderId}`
 
 This returns a single order given the order id is provided in the URL.
 
