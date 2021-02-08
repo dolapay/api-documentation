@@ -26,7 +26,7 @@ Provide your API Key in the following header:
 | name  |  string | Name of item |
 |  price | number | * Price of item |
 | sku | string | Unique id of product |
-| quantity | string | Number of cart item purchased |
+| quantity | number | Number of cart item purchased |
 | variantId | string | Id of cart Item Variant | 
 | productImage | string | URL pointing to product image |
 | attributes | map | Arbitrary product attributes, e.g color, size |
@@ -56,16 +56,15 @@ Provide your API Key in the following header:
 | address | map | ADDRESS |
 | currency | string | Currency order was created in |
 | tax | number | * Tax paid on order |
-| dutiesAndImport | string | * Duties and/or import fees |
+| dutiesAndImportFees | number | * Duties and/or import fees |
 | shipping | number | * Amount charged for shipping |
 | courier | string | Courier providing shipping quotes |
 | totalValue | number | * Total amount paid, shipping and tax included |
-| productCount | string | * Total items purchased |
+| productCount | number | * Total items purchased |
 | cart | array |  CART |
-| product | string | Names of all products |
 | reorder | boolean | `true` indicates a repeat order |
-| weight | string | * Total weight of items in `KG` | 
-| trackingURL | string | URL  for tracking fulfilled orders |
+| weight | number | * Total weight of items in `KG` | 
+| tracking_url | string | URL  for tracking fulfilled orders |
 | isInternational | string | `true` indicates that the customer is in the same country |
 
 * Prices are in fractional currency e.g cents.
@@ -153,63 +152,49 @@ Sample response:
 
 ```json
 {
-  "message": "Success",
-  "data": {
-    "status": "fulfilled",
-    "isInternational": false,
-    "dutiesAndImportFees": "0",
-    "shopperId": "SHOPPER_ID",
-    "currency": "NGN",
-    "businessName": "Joygate Ventures",
-    "productCount": "1",
-    "shopId": "SHOP_ID",
-    "chargeId": "STRIPE_CHARGE_ID",
-    "created": 1612457520,
-    "totalValue": 375820.06230700004,
-    "merchantId": "YOUR_MERCHANT_ID",
-    "address": {
-      "zipCode": "94105",
-      "insured": false,
-      "lastName": "James",
-      "name": "Daniel James",
-      "updated": 1612032137,
-      "state": "CA",
-      "city": "SF",
-      "country": "US",
-      "id": "id",
-      "created": 1608817978,
-      "defaultAddress": true,
-      "isResidential": true,
-      "address1": "333 Fremont St",
-      "firstName": "Daniel"
-    },
-    "tax": 3420.000567,
-    "name": "Daniel James",
-    "update": 1612457523,
-    "courier": "USPS - Priority Mail",
-    "shipping": 334400.05544,
-    "customerSupportEmail": "customerSupport@company.com",
-    "shop": "javascript",
-    "orderId": "ORDER_ID",
-    "tracking_url": "URL.TRACK",
-    "cart": [
-      {
-        "name": "Anything, something",
-        "price": 38000.0063,
-        "sku": "anythingsomethingskku",
-        "quantity": "1",
-        "variantId": "1231",
-        "attributes": {
+    "message": "Success",
+    "data": {
+        "orderId": "CvJSHoAqcQnPppggHBi8",
+        "name": "Omoefe Dukuye",
+        "email": "omoefe@dola.me",
+        "status": "canceled",
+        "address": {
+            "address1": "166 2nd Ave N",
+            "address2": "",
+            "city": "Nashville",
+            "state": "TN",
+            "country": "US",
+            "zipCode": "37201",
+            "insured": false,
+            "lastName": "Dukuye",
+            "firstName": "Omoefe",
+            "isResidential": true
         },
-        "productImage": "imageURL"
-      }
-    ],
-    "func": false,
-    "product": "Anything, something",
-    "email": "customer@email.com",
-    "date": 1612457520,
-    "weight": 0.3
-  }
+        "currency": "USD",
+        "tax": 996.7,
+        "dutiesAndImportFees": 100,
+        "shipping": 767,
+        "courier": "USPS - Priority Mail",
+        "totalValue": 11762,
+        "productCount": 1,
+        "cart": [
+            {
+                "name": "Hoodie (D)",
+                "price": 9999,
+                "sku": "dola-unicorn-hoodie-6",
+                "quantity": 1,
+                "variantId": "36493469483164",
+                "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+                "attributes": {
+                    "exists": true
+                }
+            }
+        ],
+        "reorder": false,
+        "weight": 0.45,
+        "tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
+        "isInternational": false
+    }
 }
 ```
 
