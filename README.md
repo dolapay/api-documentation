@@ -183,7 +183,7 @@ Sample response:
                 "price": 9999,
                 "sku": "dola-unicorn-hoodie-6",
                 "quantity": 1,
-                "variantId": "36493469483164",
+                "variantId": "3649369483164",
                 "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
                 "attributes": {
                     "exists": true
