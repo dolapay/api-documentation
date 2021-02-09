@@ -93,47 +93,45 @@ Sample response:
   "message": "Success",
   "data": [
     {
-      "orderId": "ORDER_ID",
-      "name": "Daniel James",
-      "email": "customer@email.com",
-      "status": "fulfilled",
-      "currency": "NGN",
-      "address": {
-        "address1": "333 Fremont St",
-         "city": "SF"
-         "state": "CA",
-         "country": "US",
-         "zipCode": "94105",
-        "insured": false,
-        "lastName": "James",
-        "firstName": "Daniel",
-        "isResidential": true,
-      },
-      "tax": 3420.000567,
-      "dutiesAndImportFees": 0
-      "shipping": 334400.05544,
-      "courier": "USPS - Priority Mail",
-      "totalValue": 375820.06230700004,
-      "productCount": 1,
-       "cart": [
-        {
-          "name": "Anything, something",
-          "price": 38000.0063,
-          "sku": "anythingsomethingskku", 
-          "quantity": 1,
-          "variantId": "1231"
-          "productImage": "imageURL",
-          "attributes": {
-            "color": green
-          },
+            "orderId": "I7nt5K7jaUp06vn78UOC",
+            "name": "Linus Turaki",
+            "email": "chubi+99@dola.me",
+            "status": "created",
+            "address": {
+                "address1": "607 Pine Oaks Dr",
+                "city": "Tunnel Hill",
+                "state": "GA",
+                "country": "US",
+                "zipCode": "30755",
+                "insured": true,
+                "lastName": "Turaki",
+                "firstName": "Linus",
+                "isResidential": true
+            },
+            "currency": "USD",
+            "tax": 996,
+            "dutiesAndImportFees": 0,
+            "shipping": 767,
+            "courier": "USPS - Priority Mail",
+            "totalValue": 11762,
+            "productCount": 1,
+            "cart": [
+                {
+                    "name": "Hoodie (D)",
+                    "price": 9999,
+                    "sku": "dola-unicorn-hoodie-6",
+                    "quantity": 1,
+                    "variantId": "36493469483164",
+                    "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+                    "attributes": {
+                        "exists": true
+                    }
+                }
+            ],
+            "reorder": true,
+            "weight": 0.45,
+            "isInternational": false
         }
-      ],
-      "product": "Anything, something",
-      "reorder": false,
-      "weight": 0.3,
-      "tracking_url": "URL.TRACK",
-      "isInternational": false
-    }
   ]
 }
 ```
