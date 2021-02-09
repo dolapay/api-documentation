@@ -131,7 +131,7 @@ Sample response:
             "reorder": true,
             "weight": 0.45,
             "isInternational": false
-        }
+     }
   ]
 }
 ```
