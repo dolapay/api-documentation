@@ -1,14 +1,9 @@
 # Dola's API Documentation
 This is Dola's temporary API documentation; furthermore, our developer portal will be released in March (2021).
 
-## Basics
-
-### API Reference
-
 The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts and returns [JSON](http://www.json.org/), and uses standard HTTP response codes, authentication, and verbs.
 
-:link: `Base URL: https://api.dola.me/api`
-### Authorization
+## Authorization
 
 The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet. Note, only accounts with an approved Merchant Application are provided API keys. To submit a Merchant Application, go Settings in your Dola Wallet and click Apply.
 
@@ -19,10 +14,62 @@ Each API key has the following prefix: `dola_pay_`.
 Provide your API Key in the following header:
 
 :warning: `DOLA-API-KEY: {Your dola API Key}`
+## API Reference
+:link: `Base URL: https://api.dola.me/api`
+### Orders
 
-## Orders
+### Schema
 
-Available endpoints:
+#### CART
+| Property | type | Description |
+|---|---|-|
+| name  |  string | Name of item |
+|  price | number | * Price of item |
+| sku | string | Unique id of product |
+| quantity | number | Number of cart item purchased |
+| variantId | string | Id of cart Item Variant | 
+| productImage | string | URL pointing to product image |
+| attributes | map | Arbitrary product attributes, e.g color, size |
+
+
+#### ADDRESS
+| Property  | Type | Description |
+|---|---|---|
+| address1  |  string | Street address |
+| address2 | string | Optional additional street address |
+| city  | string  | City or Town |
+| state | string | State or Province |
+| country | string | Country |
+| zipCode |  string | Zip/postal code |
+| insured | boolean  | `true` indicates insurance for this address |
+| lastName |  string | Last name registered on address |
+|  firstName |  string | First name registered on address |
+| isResidential | boolean | `true` indicates a residential address |
+
+#### ORDER
+| Property | type | Description |
+|-|-|-|
+| orderId | string | Unique identification for an order |
+| name | string | Customer name |
+| email | string | Customer's email |
+| status | string | Order status; one of the following: `created`, `fulfilled`, `canceled` |
+| address | map | ADDRESS |
+| currency | string | Currency order was created in |
+| tax | number | * Tax paid on order |
+| dutiesAndImportFees | number | * Duties and/or import fees |
+| shipping | number | * Amount charged for shipping |
+| courier | string | Courier providing shipping quotes |
+| totalValue | number | * Total amount paid, shipping and tax included |
+| productCount | number | * Total items purchased |
+| cart | array |  CART |
+| reorder | boolean | `true` indicates a repeat order |
+| weight | number | * Total weight of items in `KG` | 
+| tracking_url | string | URL  for tracking fulfilled orders |
+| isInternational | string | `true` indicates that the customer is in the same country |
+
+\* Prices are in fractional currency e.g cents.
+
+### Endpoints:
 
 * [Get All Orders](#get-all-orders)
 * [Get Order](#get-order)
@@ -46,56 +93,45 @@ Sample response:
   "message": "Success",
   "data": [
     {
-      "id": "ID",
-      "product": "Anything, something",
-      "chargeId": "STRIPE_CHARGE_ID",
-      "address": {
-        "name": "Daniel James",
-        "firstName": "Daniel",
-        "address1": "333 Fremont St",
-        "insured": false,
-        "lastName": "James",
-        "country": "US",
-        "zipCode": "94105",
-        "state": "CA",
-        "id": "ID",
-        "isResidential": true,
-        "defaultAddress": true,
-        "city": "SF"
-      },
-      "shopperId": "SHOPPER_ID",
-      "currency": "NGN",
-      "shipping": 334400.05544,
-      "shopId": "SHOP_ID",
-      "totalValue": 375820.06230700004,
-      "weight": 0.3,
-      "func": false,
-      "shop": "javascript",
-      "tax": 3420.000567,
-      "name": "Daniel James",
-      "orderId": "ORDER_ID",
-      "cart": [
-        {
-          "sku": "anythingsomethingskku",
-          "name": "Anything, something",
-          "productImage": "imageURL",
-          "quantity": 1,
-          "price": 38000.0063,
-          "attributes": {},
-          "variantId": "1231"
-        }
-      ],
-      "courier": "USPS - Priority Mail",
-      "tracking_url": "URL.TRACK",
-      "businessName": "Joygate Ventures",
-      "productCount": 1,
-      "isInternational": false,
-      "email": "customer@email.com",
-      "merchantId": "MERCHANT_ID",
-      "status": "fulfilled",
-      "customerSupportEmail": "customerSupport@company.com",
-      "dutiesAndImportFees": 0
-    }
+            "orderId": "I7nt5K7jaUp06vn78UOC",
+            "name": "Linus Turaki",
+            "email": "chubi+99@dola.me",
+            "status": "created",
+            "address": {
+                "address1": "607 Pine Oaks Dr",
+                "city": "Tunnel Hill",
+                "state": "GA",
+                "country": "US",
+                "zipCode": "30755",
+                "insured": true,
+                "lastName": "Turaki",
+                "firstName": "Linus",
+                "isResidential": true
+            },
+            "currency": "USD",
+            "tax": 996,
+            "dutiesAndImportFees": 0,
+            "shipping": 767,
+            "courier": "USPS - Priority Mail",
+            "totalValue": 11762,
+            "productCount": 1,
+            "cart": [
+                {
+                    "name": "Hoodie (D)",
+                    "price": 9999,
+                    "sku": "dola-unicorn-hoodie-6",
+                    "quantity": 1,
+                    "variantId": "36493469483164",
+                    "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+                    "attributes": {
+                        "exists": true
+                    }
+                }
+            ],
+            "reorder": true,
+            "weight": 0.45,
+            "isInternational": false
+     }
   ]
 }
 ```
@@ -114,63 +150,49 @@ Sample response:
 
 ```json
 {
-  "message": "Success",
-  "data": {
-    "status": "fulfilled",
-    "isInternational": false,
-    "dutiesAndImportFees": "0",
-    "shopperId": "SHOPPER_ID",
-    "currency": "NGN",
-    "businessName": "Joygate Ventures",
-    "productCount": "1",
-    "shopId": "SHOP_ID",
-    "chargeId": "STRIPE_CHARGE_ID",
-    "created": 1612457520,
-    "totalValue": 375820.06230700004,
-    "merchantId": "YOUR_MERCHANT_ID",
-    "address": {
-      "zipCode": "94105",
-      "insured": false,
-      "lastName": "James",
-      "name": "Daniel James",
-      "updated": 1612032137,
-      "state": "CA",
-      "city": "SF",
-      "country": "US",
-      "id": "id",
-      "created": 1608817978,
-      "defaultAddress": true,
-      "isResidential": true,
-      "address1": "333 Fremont St",
-      "firstName": "Daniel"
-    },
-    "tax": 3420.000567,
-    "name": "Daniel James",
-    "update": 1612457523,
-    "courier": "USPS - Priority Mail",
-    "shipping": 334400.05544,
-    "customerSupportEmail": "customerSupport@company.com",
-    "shop": "javascript",
-    "orderId": "ORDER_ID",
-    "tracking_url": "URL.TRACK",
-    "cart": [
-      {
-        "name": "Anything, something",
-        "price": 38000.0063,
-        "sku": "anythingsomethingskku",
-        "quantity": "1",
-        "variantId": "1231",
-        "attributes": {
+    "message": "Success",
+    "data": {
+        "orderId": "CvJSHoAqcQnPppggHBi8",
+        "name": "Omoefe Dukuye",
+        "email": "omoefe@dola.me",
+        "status": "canceled",
+        "address": {
+            "address1": "166 2nd Ave N",
+            "address2": "",
+            "city": "Nashville",
+            "state": "TN",
+            "country": "US",
+            "zipCode": "37201",
+            "insured": false,
+            "lastName": "Dukuye",
+            "firstName": "Omoefe",
+            "isResidential": true
         },
-        "productImage": "imageURL"
-      }
-    ],
-    "func": false,
-    "product": "Anything, something",
-    "email": "customer@email.com",
-    "date": 1612457520,
-    "weight": 0.3
-  }
+        "currency": "USD",
+        "tax": 996.7,
+        "dutiesAndImportFees": 100,
+        "shipping": 767,
+        "courier": "USPS - Priority Mail",
+        "totalValue": 11762,
+        "productCount": 1,
+        "cart": [
+            {
+                "name": "Hoodie (D)",
+                "price": 9999,
+                "sku": "dola-unicorn-hoodie-6",
+                "quantity": 1,
+                "variantId": "3649369483164",
+                "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+                "attributes": {
+                    "exists": true
+                }
+            }
+        ],
+        "reorder": false,
+        "weight": 0.45,
+        "tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
+        "isInternational": false
+    }
 }
 ```
 
