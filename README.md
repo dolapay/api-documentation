@@ -67,7 +67,7 @@ Provide your API Key in the following header:
 | tracking_url | string | URL  for tracking fulfilled orders |
 | isInternational | string | `true` indicates that the customer is in the same country |
 
-* Prices are in fractional currency e.g cents.
+\* Prices are in fractional currency e.g cents.
 
 ### Endpoints:
 
