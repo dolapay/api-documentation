@@ -1,0 +1,31 @@
+{
+	"name": "api-documentation",
+	"version": "1.0.0",
+	"description": "Dola's official API Docuemntation",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "npx reslate build",
+		"serve": "npx reslate serve",
+		"debug": "npx reslate debug"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/dolapay/api-documentation.git"
+	},
+	"keywords": [
+		"slate",
+		"dola",
+		"api",
+		"docs"
+	],
+	"author": "Dola Engineering",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/dolapay/api-documentation/issues"
+	},
+	"homepage": "https://github.com/dolapay/api-documentation#readme",
+	"dependencies": {
+		"reslate": "^3.0.0-4"
+	}
+}
