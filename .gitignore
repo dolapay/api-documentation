@@ -2,3 +2,4 @@
 .idea/api-documentation.iml
 *.xml
 node_modules
+.DS_Store
