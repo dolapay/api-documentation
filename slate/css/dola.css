@@ -1,0 +1,146 @@
+.content  h1 {
+    border-top-color: #f1f1f1;
+    border-bottom-color: #f1f1f1;
+    background-color: #ffffff;
+}
+
+.content h3, 
+.content h4, 
+.content h5, 
+.content h6 {
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.page-wrapper {
+    background-color: #ffffff;
+}
+
+.toc-wrapper {
+    background-color: #ffffff;
+    border-right: 1px solid #f1f1f1;
+}
+
+.toc-link, .toc-footer li {
+    color: #0B0B0B;
+}
+
+.content table tr:nth-child(even)>td {
+    background-color: #f9f9f9
+}
+
+.lang-selector a {
+    text-transform: capitalize;
+}
+
+table {
+    border-color: #f1f1f1;
+}
+
+.content table tr:last-child {
+    border-color: #f1f1f1;
+}
+
+.toc-wrapper .toc-link.active-parent {
+    color: #0B0B0B;
+    background-color: #ffffff;
+}
+
+.toc-wrapper .toc-list-h2 {
+    background-color: #ffffff;
+}
+
+ul.toc-list-h2.active {
+    background-color: #ffffff;
+}
+
+.toc-wrapper .toc-link.active {
+    background-color: #0f75d4;
+    color: #0B0B0B;
+    background: linear-gradient( 
+270deg
+ , #D4CFFF 0%, #EAB5FF 100%);
+}
+
+.content code {
+}
+
+.content h2 {
+    border-color: #f1f1f1;
+}
+
+.content table tr:nth-child(even)>td:nth-child(1) {
+    border-radius: 10px 0 0 10px;
+}
+
+.content table tr:nth-child(even)>td:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+.toc-wrapper ul, .toc-wrapper li {
+    line-height: 30px;
+}
+
+a {
+    color: #0B0B0B;
+}
+
+.content table th {
+    border-color: #f1f1f1;
+}
+
+.content aside {
+    background-color: #F1F1F1;
+}
+
+.toc-wrapper .logo {
+    margin: 30px 0 20px 0px;
+    max-width: 90px;
+}
+
+a:hover {
+    font-weight: bold;
+}
+
+.page-wrapper .dark-box {
+    background-color: #232323;
+}
+
+.content blockquote>p {
+    background-color: #101010;
+}
+
+.content pre, .content blockquote {
+    background-color: #0B0B0B;
+    border-radius: 0;
+}
+
+.page-wrapper .lang-selector {
+    border-color: #0B0B0B;
+    background-color: #232323;
+}
+
+.lang-selector a.active {
+    background-color: #0B0B0B;
+    color: #ffffff;
+}
+
+#nav-button {
+    opacity: 1;
+}
+
+#nav-button span {
+    background-color: #0B0B0B;
+    color: #fff;
+}
+
+#nav-button img {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .toc-wrapper .lang-selector {
+        display: none;
+    }
+}

@@ -16,8 +16,6 @@ code_clipboard: true
 
 # Overview
 
-This is Dola's API documentation; furthermore, our developer portal will be released in March (2021).
-
 The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts and returns [JSON](http://www.json.org/), and uses standard HTTP response codes, authentication, and verbs.
 
 # Authorization
@@ -48,7 +46,7 @@ You must replace <code>DOLA-API-KEY</code> with your Dola API key.
 
 #### CART
 
-| Property     | type   | Description                                   |
+| Property     | Type   | Description                                   |
 | ------------ | ------ | --------------------------------------------- |
 | name         | string | Name of item                                  |
 | price        | number | \* Price of item                              |
@@ -75,7 +73,7 @@ You must replace <code>DOLA-API-KEY</code> with your Dola API key.
 
 #### ORDER
 
-| Property            | type    | Description                                                            |
+| Property            | Type    | Description                                                            |
 | ------------------- | ------- | ---------------------------------------------------------------------- |
 | orderId             | string  | Unique identification for an order                                     |
 | name                | string  | Customer name                                                          |

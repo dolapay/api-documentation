@@ -1,5 +1,4 @@
 # Dola's API Documentation
-This is Dola's temporary API documentation; furthermore, our developer portal will be released in March (2021).
 
 The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). Our API has predictable resource-oriented URLs, accepts and returns [JSON](http://www.json.org/), and uses standard HTTP response codes, authentication, and verbs.
 
@@ -21,7 +20,7 @@ Provide your API Key in the following header:
 ### Schema
 
 #### CART
-| Property | type | Description |
+| Property | Type | Description |
 |---|---|-|
 | name  |  string | Name of item |
 |  price | number | * Price of item |
@@ -47,7 +46,7 @@ Provide your API Key in the following header:
 | isResidential | boolean | `true` indicates a residential address |
 
 #### ORDER
-| Property | type | Description |
+| Property | Type | Description |
 |-|-|-|
 | orderId | string | Unique identification for an order |
 | name | string | Customer name |
