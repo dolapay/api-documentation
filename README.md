@@ -10,8 +10,6 @@ Your API keys carry many privileges, so be sure to keep them secure! Do not shar
 
 Each API key has the following prefix: `dola_pay_`.
 
-Provide your API Key in the following header:
-
 :warning: `DOLA-API-KEY: {Your dola API Key}`
 ## API Reference
 :link: `Base URL: https://api.dola.me/api`

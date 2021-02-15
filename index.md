@@ -26,8 +26,6 @@ Your API keys carry many privileges, so be sure to keep them secure! Do not shar
 
 Each API key has the following prefix: `dola_pay_`.
 
-Provide your API Key in the following header:
-
 > To authorize, use this code:
 
 ```javascript
