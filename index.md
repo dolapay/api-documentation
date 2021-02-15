@@ -2,7 +2,7 @@
 title: Dola API Documentation
 
 language_tabs: # must be one of https://prismjs.com/#supported-languages
-  - javascript
+  - shell
 
 toc_footers:
 
@@ -20,43 +20,21 @@ The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representat
 
 # Authorization
 
-The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet.
+> To authorize, use this code:
+
+```shell
+curl "api_endpoint_here"
+-H "DOLA-API-KEY: dolaapikey"
+```
+
+> Make sure to replace `dolaapikey` with your API key.
+> The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet.
 
 Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. Each API key has the following prefix: `dola_pay_`.
 
 Dola expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-<code>DOLA-API-KEY: dolaapikey</code>
-
-> To authorize, use this code:
-
-```javascript
-`DOLA-API-KEY: dolaapikey`;
-```
-
-> Make sure to replace `dolaapikey` with your API key.
-
-<aside class="notice">
-You must replace <code>dolaapikey</code> with your Dola API key.
-</aside>
-
-# Orders
-
-### Schema
-
-#### CART
-
-| Property     | Type   | Description                                   |
-| ------------ | ------ | --------------------------------------------- |
-| name         | string | Name of item                                  |
-| price        | number | \* Price of item                              |
-| sku          | string | Unique id of product                          |
-| quantity     | number | Number of cart item purchased                 |
-| variantId    | string | Id of cart Item Variant                       |
-| productImage | string | URL pointing to product image                 |
-| attributes   | map    | Arbitrary product attributes, e.g color, size |
-
-#### ADDRESS
+# Addresses
 
 | Property      | Type    | Description                                 |
 | ------------- | ------- | ------------------------------------------- |
@@ -71,7 +49,19 @@ You must replace <code>dolaapikey</code> with your Dola API key.
 | firstName     | string  | First name registered on address            |
 | isResidential | boolean | `true` indicates a residential address      |
 
-#### ORDER
+# Cart
+
+| Property     | Type   | Description                                   |
+| ------------ | ------ | --------------------------------------------- |
+| name         | string | Name of item                                  |
+| price        | number | \* Price of item                              |
+| sku          | string | Unique id of product                          |
+| quantity     | number | Number of cart item purchased                 |
+| variantId    | string | Id of cart Item Variant                       |
+| productImage | string | URL pointing to product image                 |
+| attributes   | map    | Arbitrary product attributes, e.g color, size |
+
+# Orders
 
 | Property            | Type    | Description                                                            |
 | ------------------- | ------- | ---------------------------------------------------------------------- |
@@ -86,33 +76,16 @@ You must replace <code>dolaapikey</code> with your Dola API key.
 | shipping            | number  | \* Amount charged for shipping                                         |
 | courier             | string  | Courier providing shipping quotes                                      |
 | totalValue          | number  | \* Total amount paid, shipping and tax included                        |
-| productCount        | number  | \* Total items purchased                                               |
+| productCount        | number  | Total items purchased                                                  |
 | cart                | array   | CART                                                                   |
 | reorder             | boolean | `true` indicates a repeat order                                        |
-| weight              | number  | \* Total weight of items in `KG`                                       |
+| weight              | number  | Total weight of items in `KG`                                          |
 | tracking_url        | string  | URL for tracking fulfilled orders                                      |
 | isInternational     | string  | `true` indicates that the customer is in the same country              |
 
 \* Prices are in fractional currency e.g cents.
 
-### Endpoints:
-
-- [Get All Orders](#get-all-orders)
-- [Get Order](#get-order)
-- [Update Order](#update-order)
-- [Delete Order](#delete-order)
-
-### Get All Orders
-
-`GET /order`
-
-This returns all your orders.
-
-Sample response:
-
-`Status: 200`
-
-`Body:`
+## Get All Orders
 
 ```json
 {
@@ -162,17 +135,13 @@ Sample response:
 }
 ```
 
-### Get Order
+This returns all your orders.
 
-`GET /order/{orderId}`
+**HTTP Request**
 
-This returns a single order given the order id is provided in the URL.
+`GET https://api.dola.me/api/orders`
 
-Sample response:
-
-`Status: 200`
-
-`Body:`
+## Get Order
 
 ```json
 {
@@ -222,11 +191,13 @@ Sample response:
 }
 ```
 
-### Update Order
+This returns a single order given the order id is provided in the URL.
 
-`PATCH /order/{orderId}`
+**HTTP Request**
 
-This marks an order as fulfilled, given the tracking url is in the request body.
+`GET https://api.dola.me/api/orders/<orderID>`
+
+## Update Order
 
 ```json
 {
@@ -234,17 +205,27 @@ This marks an order as fulfilled, given the tracking url is in the request body.
 }
 ```
 
-Sample response:
+This marks an order as fulfilled, given the tracking url is in the request body.
 
-`Status: 200`
+**HTTP Request**
 
-### Delete Order
+`PATCH https://api.dola.me/api/orders/<orderID>`
 
-`DELETE /order/{orderId}`
+## Delete Order
 
 This cancels and refunds an order.
 
-Sample response:
+**HTTP Request**
 
-`Status: 200`
+`DELETE https://api.dola.me/api/orders/<orderID>`
 
+# Errors
+
+Dola API uses the following error codes:
+
+| Error Code | Meaning                                                                    |
+| ---------- | -------------------------------------------------------------------------- |
+| 401        | Unauthorized – Your API key is wrong.                                      |
+| 403        | Forbidden – The requested resource is hidden for administrators only.      |
+| 404        | Not Found – The specified resource could not be found.                     |
+| 500        | Internal Server Error – We had a problem with our server. Try again later. |
