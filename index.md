@@ -20,7 +20,7 @@ The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representat
 
 # Authorization
 
-The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet. Note, only accounts with an approved Merchant Application are provided API keys. To submit a Merchant Application, go Settings in your Dola Wallet and click Apply.
+The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet.
 
 Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
 
