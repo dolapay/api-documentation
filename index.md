@@ -22,20 +22,22 @@ The Dola API is organized around [REST](http://en.wikipedia.org/wiki/Representat
 
 The Dola API uses API keys to authenticate requests. You can view and manage your API keys in your Dola Wallet.
 
-Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth.
+Your API keys carry many privileges, so be sure to keep them secure! Do not share your secret API keys in publicly accessible areas such as GitHub, client-side code, and so forth. Each API key has the following prefix: `dola_pay_`.
 
-Each API key has the following prefix: `dola_pay_`.
+Dola expects for the API key to be included in all API requests to the server in a header that looks like the following:
+
+<code>DOLA-API-KEY: dolaapikey</code>
 
 > To authorize, use this code:
 
 ```javascript
-`DOLA-API-KEY: {Your dola API Key}`;
+`DOLA-API-KEY: dolaapikey`;
 ```
 
-> `DOLA-API-KEY: {Your dola API Key}`.
+> Make sure to replace `dolaapikey` with your API key.
 
 <aside class="notice">
-You must replace <code>DOLA-API-KEY</code> with your Dola API key.
+You must replace <code>dolaapikey</code> with your Dola API key.
 </aside>
 
 # Orders
