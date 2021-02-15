@@ -221,7 +221,7 @@ This cancels and refunds an order.
 
 # Errors
 
-Dola API uses the following error codes:
+Dola's API uses the following error codes:
 
 | Error Code | Meaning                                                                    |
 | ---------- | -------------------------------------------------------------------------- |
