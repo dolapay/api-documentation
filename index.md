@@ -63,29 +63,40 @@ Dola expects for the API key to be included in all API requests to the server in
 
 # Orders
 
-| Property            | Type    | Description                                                            |
-| ------------------- | ------- | ---------------------------------------------------------------------- |
-| orderId             | string  | Unique identification for an order                                     |
-| name                | string  | Customer name                                                          |
-| email               | string  | Customer's email                                                       |
-| status              | string  | Order status; one of the following: `created`, `fulfilled`, `canceled` |
-| address             | map     | ADDRESS                                                                |
-| currency            | string  | Currency order was created in                                          |
-| tax                 | number  | \* Tax paid on order                                                   |
-| dutiesAndImportFees | number  | \* Duties and/or import fees                                           |
-| shipping            | number  | \* Amount charged for shipping                                         |
-| courier             | string  | Courier providing shipping quotes                                      |
-| totalValue          | number  | \* Total amount paid, shipping and tax included                        |
-| productCount        | number  | Total items purchased                                                  |
-| cart                | array   | CART                                                                   |
-| reorder             | boolean | `true` indicates a repeat order                                        |
-| weight              | number  | Total weight of items in `KG`                                          |
-| tracking_url        | string  | URL for tracking fulfilled orders                                      |
-| isInternational     | string  | `true` indicates that the customer is in the same country              |
+| Property                  | Type    | Description                                                                      |
+| ------------------------- | ------- | -------------------------------------------------------------------------------- |
+| orderId                   | string  | Unique identification for an order                                               |
+| name                      | string  | Customer name                                                                    |
+| email                     | string  | Customer's email                                                                 |
+| status                    | string  | Order status; one of the following: `created`, `fulfilled`, `canceled`           |
+| address                   | map     | ADDRESS                                                                          |
+| currency                  | string  | Currency order was created in                                                    |
+| tax                       | number  | \* Tax paid on order                                                             |
+| dutiesAndImportFees       | number  | \* Duties and/or import fees                                                     |
+| shipping                  | number  | \* Amount charged for shipping                                                   |
+| courier                   | string  | Courier providing shipping quotes                                                |
+| totalValue                | number  | \* Total amount paid, shipping and tax included                                  |
+| productCount              | number  | Total items purchased                                                            |
+| cart                      | array   | CART                                                                             |
+| reorder                   | boolean | `true` indicates a repeat order                                                  |
+| weight                    | number  | Total weight of items in `KG`                                                    |
+| tracking_url              | string  | URL for tracking fulfilled orders                                                |
+| downloadURL               | string  | URL for fulfilling downloadable orders                                           |
+| isInternational           | boolean | `true` indicates that the customer is in the same country                        |
+| containsNonShippableItems | boolean | `true` indicates that the product is not a physical product and can't be shipped |
 
 \* Prices are in fractional currency e.g cents.
 
 ## Get All Orders
+
+```shell
+curl "https://api.dola.me/api/orders"
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+```
+
+> This returns a JSON response with this structure:
 
 ```json
 {
@@ -129,7 +140,8 @@ Dola expects for the API key to be included in all API requests to the server in
 			],
 			"reorder": true,
 			"weight": 0.45,
-			"isInternational": false
+			"isInternational": false,
+			"containsNonShippableItems": false
 		}
 	]
 }
@@ -142,6 +154,15 @@ This returns all your orders.
 `GET https://api.dola.me/api/orders`
 
 ## Get Order
+
+```shell
+curl "https://api.dola.me/api/orders/<orderID>"
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+```
+
+> This returns a JSON response with this structure:
 
 ```json
 {
@@ -186,7 +207,8 @@ This returns all your orders.
 		"reorder": false,
 		"weight": 0.45,
 		"tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
-		"isInternational": false
+		"isInternational": false,
+		"containsNonShippableItems": false
 	}
 }
 ```
@@ -197,11 +219,136 @@ This returns a single order given the order id is provided in the URL.
 
 `GET https://api.dola.me/api/orders/<orderID>`
 
+**URL Parameters**
+
+| Parameter | Optional | Description         |
+| --------- | -------- | ------------------- |
+| orderID   | false    | The id of the order |
+
 ## Update Order
+
+> For physical products, The update endpoint can be used like this:
+
+```shell
+curl https://api.dola.me/api/orders/<orderID>
+-X PATCH
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+-d "{\"tracking_url\": \"https://tracking-service.net/ksjdogiei32234kred\"}"
+```
+
+> This returns a JSON response with this structure:
 
 ```json
 {
-	"tracking_url": "https://tracking-service.net/ksjdogiei32234kred"
+	"message": "Success",
+	"data": {
+		"orderId": "CvJSHoAqcQnPppggHBi8",
+		"name": "Omoefe Dukuye",
+		"email": "omoefe@dola.me",
+		"status": "canceled",
+		"address": {
+			"address1": "166 2nd Ave N",
+			"address2": "",
+			"city": "Nashville",
+			"state": "TN",
+			"country": "US",
+			"zipCode": "37201",
+			"insured": false,
+			"lastName": "Dukuye",
+			"firstName": "Omoefe",
+			"isResidential": true
+		},
+		"currency": "USD",
+		"tax": 996.7,
+		"dutiesAndImportFees": 100,
+		"shipping": 767,
+		"courier": "USPS - Priority Mail",
+		"totalValue": 11762,
+		"productCount": 1,
+		"cart": [
+			{
+				"name": "Hoodie (D)",
+				"price": 9999,
+				"sku": "dola-unicorn-hoodie-6",
+				"quantity": 1,
+				"variantId": "3649369483164",
+				"productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+				"attributes": {
+					"exists": true
+				}
+			}
+		],
+		"reorder": false,
+		"weight": 0.45,
+		"tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
+		"isInternational": false,
+		"containsNonShippableItems": false
+	}
+}
+```
+
+> For non-shippable products, The update endpoint can be used like this:
+
+```shell
+curl https://api.dola.me/api/orders/<orderID>
+-X PATCH
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+-d "{\"status\": \"fulfilled\", \"cart\": {\"downloadURL\":\"https://tracking-service.net/ksjdogiei32234kred\", \"sku\": \"dola-unicorn-hoodie-6\"}, }"
+```
+
+> This returns a JSON response with this structure.
+
+```json
+{
+	"message": "Success",
+	"data": {
+		"orderId": "CvJSHoAqcQnPppggHBi8",
+		"name": "Omoefe Dukuye",
+		"email": "omoefe@dola.me",
+		"status": "canceled",
+		"address": {
+			"address1": "166 2nd Ave N",
+			"address2": "",
+			"city": "Nashville",
+			"state": "TN",
+			"country": "US",
+			"zipCode": "37201",
+			"insured": false,
+			"lastName": "Dukuye",
+			"firstName": "Omoefe",
+			"isResidential": true
+		},
+		"currency": "USD",
+		"tax": 996.7,
+		"dutiesAndImportFees": 100,
+		"shipping": 767,
+		"courier": "USPS - Priority Mail",
+		"totalValue": 11762,
+		"productCount": 1,
+		"cart": [
+			{
+				"name": "Hoodie (D)",
+				"price": 9999,
+				"sku": "dola-unicorn-hoodie-6",
+				"quantity": 1,
+				"variantId": "3649369483164",
+				"productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+				"downloadURL": "https://downloadURL-service-cdn/kf5ge234kred",
+				"attributes": {
+					"exists": true
+				}
+			}
+		],
+		"reorder": false,
+		"weight": 0.45,
+		"tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
+		"isInternational": false,
+		"containsNonShippableItems": true
+	}
 }
 ```
 
@@ -211,13 +358,44 @@ This marks an order as fulfilled, given the tracking url is in the request body.
 
 `PATCH https://api.dola.me/api/orders/<orderID>`
 
+**Body Parameters**
+
+**CART UPDATE**
+
+| Parameter   | Optional | Description                                 |
+| ----------- | -------- | ------------------------------------------- |
+| downloadURL | false    | download url for downloadable product       |
+| sku         | false    | Stock keeping unit for downloadable product |
+
+| Parameter    | Optional | Description                                                            |
+| ------------ | -------- | ---------------------------------------------------------------------- |
+| tracking_url | true     | Tracking url for physical products                                     |
+| status       | true     | Order status; one of the following: `created`, `fulfilled`, `canceled` |
+| cart         | true     | CART UPDATE                                                            |
+
 ## Delete Order
+
+```shell
+curl https://api.dola.me/api/orders/<orderID>
+-X DELETE
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+```
+
+> This endpoint has no response body.
 
 This cancels and refunds an order.
 
 **HTTP Request**
 
 `DELETE https://api.dola.me/api/orders/<orderID>`
+
+**URL Parameters**
+
+| Parameter | Optional | Description         |
+| --------- | -------- | ------------------- |
+| orderID   | false    | The id of the order |
 
 # Errors
 

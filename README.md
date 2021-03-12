@@ -57,12 +57,13 @@ Each API key has the following prefix: `dola_pay_`.
 | shipping | number | * Amount charged for shipping |
 | courier | string | Courier providing shipping quotes |
 | totalValue | number | * Total amount paid, shipping and tax included |
-| productCount | number | * Total items purchased |
+| productCount | number | Total items purchased |
 | cart | array |  CART |
 | reorder | boolean | `true` indicates a repeat order |
-| weight | number | * Total weight of items in `KG` | 
-| tracking_url | string | URL  for tracking fulfilled orders |
+| weight | number | Total weight of items in `KG` | 
+| trackingURL | string | URL  for tracking fulfilled orders |
 | isInternational | string | `true` indicates that the customer is in the same country |
+| attachments | map | Arbitrary info added to an order |
 
 \* Prices are in fractional currency e.g cents.
 
@@ -197,17 +198,74 @@ Sample response:
 
 `PATCH /order/{orderId}`
 
-This marks an order as fulfilled, given the tracking url is in the request body.
+This optionally:
+- Marks an order as fulfilled.
+- Adds a tracking URL to an order.
+- Adds arbitrary attachments to an order.
+- Updates the Origin address of an order.
 
-```json
-{
-    "tracking_url": "https://tracking-service.net/ksjdogiei32234kred"
-}
-```
+Request Body Schema:
+| Property | Type | Description |
+|-|-|-|
+| trackingURL | string | URL  for tracking fulfilled orders |
+| fulfill | boolean | Marks an order as fulfilled |
+| attachments | map |  Arbitrary info added to an order |
+| originAddress | map | ADDRESS |
+
 
 Sample response:
 
 `Status: 200`
+
+`Body:`
+
+```json
+{
+    "message": "Success",
+    "data": {
+        "orderId": "CvJSHoAqcQnPppggHBi8",
+        "name": "Omoefe Dukuye",
+        "email": "omoefe@dola.me",
+        "status": "canceled",
+        "address": {
+            "address1": "166 2nd Ave N",
+            "address2": "",
+            "city": "Nashville",
+            "state": "TN",
+            "country": "US",
+            "zipCode": "37201",
+            "insured": false,
+            "lastName": "Dukuye",
+            "firstName": "Omoefe",
+            "isResidential": true
+        },
+        "currency": "USD",
+        "tax": 996.7,
+        "dutiesAndImportFees": 100,
+        "shipping": 767,
+        "courier": "USPS - Priority Mail",
+        "totalValue": 11762,
+        "productCount": 1,
+        "cart": [
+            {
+                "name": "Hoodie (D)",
+                "price": 9999,
+                "sku": "dola-unicorn-hoodie-6",
+                "quantity": 1,
+                "variantId": "3649369483164",
+                "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+                "attributes": {
+                    "exists": true
+                }
+            }
+        ],
+        "reorder": false,
+        "weight": 0.45,
+        "tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
+        "isInternational": false
+    }
+}
+```
 
 ### Delete Order
 
