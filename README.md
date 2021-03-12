@@ -64,6 +64,7 @@ Each API key has the following prefix: `dola_pay_`.
 | trackingURL | string | URL  for tracking fulfilled orders |
 | isInternational | string | `true` indicates that the customer is in the same country |
 | attachments | map | Arbitrary info added to an order |
+
 \* Prices are in fractional currency e.g cents.
 
 ### Endpoints:
@@ -210,12 +211,14 @@ Request Body Schema:
 | fulfill | boolean | Marks an order as fulfilled |
 | attachments | map |  Arbitrary info added to an order |
 | originAddress | map | ADDRESS |
-```json
+
 
 Sample response:
 
 `Status: 200`
+
 `Body:`
+
 ```json
 {
     "message": "Success",
