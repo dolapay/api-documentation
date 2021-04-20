@@ -28,6 +28,13 @@ Each API key has the following prefix: `dola_pay_`.
 | productImage | string | URL pointing to product image |
 | attributes | map | Arbitrary product attributes, e.g color, size |
 
+#### TRACKING
+| Property | Type | Description |
+|---|---|-|
+| trackingId  |  string | Fulfilment Id provided by courier |
+|  trackingURL | string | URL required to track fulfilment |
+| courier | string | Courier |
+| id | string | Fulfilment Id provided by Dola |
 
 #### ADDRESS
 | Property  | Type | Description |
@@ -51,19 +58,20 @@ Each API key has the following prefix: `dola_pay_`.
 | email | string | Customer's email |
 | status | string | Order status; one of the following: `created`, `fulfilled`, `canceled` |
 | address | map | ADDRESS |
+| attachments | map | Arbitrary info added to an order |
 | currency | string | Currency order was created in |
 | tax | number | * Tax paid on order |
 | dutiesAndImportFees | number | * Duties and/or import fees |
 | shipping | number | * Amount charged for shipping |
 | courier | string | Courier providing shipping quotes |
+| trackingInfo | array | TRACKING |
 | totalValue | number | * Total amount paid, shipping and tax included |
 | productCount | number | Total items purchased |
 | cart | array |  CART |
 | reorder | boolean | `true` indicates a repeat order |
 | weight | number | Total weight of items in `KG` | 
-| trackingURL | string | URL  for tracking fulfilled orders |
 | isInternational | string | `true` indicates that the customer is in the same country |
-| attachments | map | Arbitrary info added to an order |
+
 
 \* Prices are in fractional currency e.g cents.
 
@@ -73,6 +81,8 @@ Each API key has the following prefix: `dola_pay_`.
 * [Get Order](#get-order)
 * [Update Order](#update-order)
 * [Delete Order](#delete-order)
+* [Add Tracking](#add-tracking)
+* [Delete Tracking](#delete-tracking)
 
 ### Get All Orders
 
@@ -272,6 +282,31 @@ Sample response:
 `DELETE /order/{orderId}`
 
 This cancels and refunds an order.
+
+Sample response:
+
+`Status: 200`
+
+### Add Tracking
+ 
+`POST /order/{orderId}/trackingInfo`
+
+This adds fulfilment and tracking info to an order(supports multiple partial fulfilments)
+
+Request Body Schema:
+| Property | Type | Description |
+|-|-|-|
+| trackingId  |  string | Fulfilment Id provided by courier |
+|  trackingURL | string(required) | URL required to track fulfilment |
+| courier | string | Courier |
+
+Sample response:
+
+`Status: 200`
+
+### Delete Tracking
+
+`DELETE /order/{orderId}/trackingInfo/{trackingId}`
 
 Sample response:
 
