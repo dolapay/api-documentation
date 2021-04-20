@@ -210,14 +210,12 @@ Sample response:
 
 This optionally:
 - Marks an order as fulfilled.
-- Adds a tracking URL to an order.
 - Adds arbitrary attachments to an order.
 - Updates the Origin address of an order.
 
 Request Body Schema:
 | Property | Type | Description |
 |-|-|-|
-| trackingURL | string | URL  for tracking fulfilled orders |
 | fulfill | boolean | Marks an order as fulfilled |
 | attachments | map |  Arbitrary info added to an order |
 | originAddress | map | ADDRESS |
