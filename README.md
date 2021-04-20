@@ -70,7 +70,7 @@ Each API key has the following prefix: `dola_pay_`.
 | cart | array |  CART |
 | reorder | boolean | `true` indicates a repeat order |
 | weight | number | Total weight of items in `KG` | 
-| isInternational | string | `true` indicates that the customer is in the same country |
+| isInternational | string | `true` indicates that an order is from a different country |
 
 
 \* Prices are in fractional currency e.g cents.
