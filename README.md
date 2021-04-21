@@ -63,7 +63,6 @@ Each API key has the following prefix: `dola_pay_`.
 | tax | number | * Tax paid on order |
 | dutiesAndImportFees | number | * Duties and/or import fees |
 | shipping | number | * Amount charged for shipping |
-| courier | string | Courier providing shipping quotes |
 | trackingInfo | array | TRACKING |
 | totalValue | number | * Total amount paid, shipping and tax included |
 | productCount | number | Total items purchased |
@@ -120,7 +119,18 @@ Sample response:
             "tax": 996,
             "dutiesAndImportFees": 0,
             "shipping": 767,
-            "courier": "USPS - Priority Mail",
+            "trackingInfo": [
+                {
+                     "id": "HSAPqHOLPJWLkiGMRuxK",
+                     "trackingURL": "URL.TRACKY"
+                },
+               {
+                     "id": "PAkrEXgDwayoecUHSbRb",
+                     "courier": "UPSS",
+                     "trackingURL": "URL.TRACKI",
+                     "trackingId": "i3mdaj3i"
+               }
+            ],
             "totalValue": 11762,
             "productCount": 1,
             "cart": [
@@ -180,7 +190,18 @@ Sample response:
         "tax": 996.7,
         "dutiesAndImportFees": 100,
         "shipping": 767,
-        "courier": "USPS - Priority Mail",
+        "trackingInfo": [
+            {
+                 "id": "HSAPqHOLPJWLkiGMRuxK",
+                 "trackingURL": "URL.TRACKY"
+            },
+             {
+                   "id": "PAkrEXgDwayoecUHSbRb",
+                   "courier": "UPSS",
+                   "trackingURL": "URL.TRACKI",
+                   "trackingId": "i3mdaj3i"
+             }
+       ],
         "totalValue": 11762,
         "productCount": 1,
         "cart": [
@@ -251,6 +272,18 @@ Sample response:
         "tax": 996.7,
         "dutiesAndImportFees": 100,
         "shipping": 767,
+        "trackingInfo": [
+            {
+                 "id": "HSAPqHOLPJWLkiGMRuxK",
+                 "trackingURL": "URL.TRACKY"
+            },
+           {
+                 "id": "PAkrEXgDwayoecUHSbRb",
+                 "courier": "UPSS",
+                 "trackingURL": "URL.TRACKI",
+                 "trackingId": "i3mdaj3i"
+           }
+        ],
         "courier": "USPS - Priority Mail",
         "totalValue": 11762,
         "productCount": 1,
