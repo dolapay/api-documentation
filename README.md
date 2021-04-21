@@ -322,7 +322,7 @@ Sample response:
  
 `POST /order/{orderId}/trackingInfo`
 
-This adds fulfilment and tracking info to an order(supports multiple partial fulfilments)
+This adds fulfilment and tracking info to an order(supports multiple partial fulfilments).
 
 Request Body Schema:
 | Property | Type | Description |
@@ -338,6 +338,8 @@ Sample response:
 ### Delete Tracking
 
 `DELETE /order/{orderId}/trackingInfo/{trackingId}`
+
+This removes fulfilment and tracking info from an order.
 
 Sample response:
 
