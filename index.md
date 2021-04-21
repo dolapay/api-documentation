@@ -34,7 +34,9 @@ Your API keys carry many privileges, so be sure to keep them secure! Do not shar
 
 Dola expects for the API key to be included in all API requests to the server in a header that looks like the following:
 
-# Addresses
+# Schema
+
+## Address
 
 | Property      | Type    | Description                                 |
 | ------------- | ------- | ------------------------------------------- |
@@ -49,7 +51,7 @@ Dola expects for the API key to be included in all API requests to the server in
 | firstName     | string  | First name registered on address            |
 | isResidential | boolean | `true` indicates a residential address      |
 
-# Cart
+## Cart
 
 | Property     | Type   | Description                                   |
 | ------------ | ------ | --------------------------------------------- |
@@ -61,7 +63,16 @@ Dola expects for the API key to be included in all API requests to the server in
 | productImage | string | URL pointing to product image                 |
 | attributes   | map    | Arbitrary product attributes, e.g color, size |
 
-# Orders
+## Tracking
+
+| Property    | Type   | Description                       |
+| ----------- | ------ | --------------------------------- |
+| trackingId  | string | Fulfilment Id provided by courier |
+| trackingURL | string | URL required to track fulfilment  |
+| courier     | string | Courier                           |
+| id          | string | Fulfilment Id provided by Dola    |
+
+## Order
 
 | Property                  | Type    | Description                                                                      |
 | ------------------------- | ------- | -------------------------------------------------------------------------------- |
@@ -74,19 +85,19 @@ Dola expects for the API key to be included in all API requests to the server in
 | tax                       | number  | \* Tax paid on order                                                             |
 | dutiesAndImportFees       | number  | \* Duties and/or import fees                                                     |
 | shipping                  | number  | \* Amount charged for shipping                                                   |
-| courier                   | string  | Courier providing shipping quotes                                                |
 | totalValue                | number  | \* Total amount paid, shipping and tax included                                  |
 | productCount              | number  | Total items purchased                                                            |
 | cart                      | array   | CART                                                                             |
 | reorder                   | boolean | `true` indicates a repeat order                                                  |
 | weight                    | number  | Total weight of items in `KG`                                                    |
-| tracking_url              | string  | URL for tracking fulfilled orders                                                |
+| trackingInfo              | array   | TRACKING                                                                         |
 | downloadURL               | string  | URL for fulfilling downloadable orders                                           |
 | isInternational           | boolean | `true` indicates that the customer is in the same country                        |
 | containsNonShippableItems | boolean | `true` indicates that the product is not a physical product and can't be shipped |
 
 \* Prices are in fractional currency e.g cents.
 
+# API
 ## Get All Orders
 
 ```shell
@@ -100,50 +111,60 @@ curl "https://api.dola.me/api/orders"
 
 ```json
 {
-	"message": "Success",
-	"data": [
-		{
-			"orderId": "I7nt5K7jaUp06vn78UOC",
-			"name": "Linus Turaki",
-			"email": "chubi+99@dola.me",
-			"status": "created",
-			"address": {
-				"address1": "607 Pine Oaks Dr",
-				"city": "Tunnel Hill",
-				"state": "GA",
-				"country": "US",
-				"zipCode": "30755",
-				"insured": true,
-				"lastName": "Turaki",
-				"firstName": "Linus",
-				"isResidential": true
-			},
-			"currency": "USD",
-			"tax": 996,
-			"dutiesAndImportFees": 0,
-			"shipping": 767,
-			"courier": "USPS - Priority Mail",
-			"totalValue": 11762,
-			"productCount": 1,
-			"cart": [
-				{
-					"name": "Hoodie (D)",
-					"price": 9999,
-					"sku": "dola-unicorn-hoodie-6",
-					"quantity": 1,
-					"variantId": "36493469483164",
-					"productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
-					"attributes": {
-						"exists": true
-					}
-				}
-			],
-			"reorder": true,
-			"weight": 0.45,
-			"isInternational": false,
-			"containsNonShippableItems": false
-		}
-	]
+  "message": "Success",
+  "data": [
+    {
+      "orderId": "I7nt5K7jaUp06vn78UOC",
+      "name": "Linus Turaki",
+      "email": "chubi+99@dola.me",
+      "status": "created",
+      "address": {
+        "address1": "607 Pine Oaks Dr",
+        "city": "Tunnel Hill",
+        "state": "GA",
+        "country": "US",
+        "zipCode": "30755",
+        "insured": true,
+        "lastName": "Turaki",
+        "firstName": "Linus",
+        "isResidential": true
+      },
+      "currency": "USD",
+      "tax": 996,
+      "dutiesAndImportFees": 0,
+      "shipping": 767,
+      "trackingInfo": [
+        {
+          "id": "HSAPqHOLPJWLkiGMRuxK",
+          "trackingURL": "https://tracking-service.net/ksjdogiei32234kred"
+        },
+        {
+          "id": "PAkrEXgDwayoecUHSbRb",
+          "courier": "UPSS",
+          "trackingURL": "https://tracking-service.net/ksjdogiei32234kred",
+          "trackingId": "i3mdaj3i"
+        }
+      ],
+      "totalValue": 11762,
+      "productCount": 1,
+      "cart": [
+        {
+          "name": "Hoodie (D)",
+          "price": 9999,
+          "sku": "dola-unicorn-hoodie-6",
+          "quantity": 1,
+          "variantId": "36493469483164",
+          "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+          "attributes": {
+            "exists": true
+          }
+        }
+      ],
+      "reorder": true,
+      "weight": 0.45,
+      "isInternational": false
+    }
+  ]
 }
 ```
 
@@ -156,7 +177,7 @@ This returns all your orders.
 ## Get Order
 
 ```shell
-curl "https://api.dola.me/api/orders/<orderID>"
+curl "https://api.dola.me/api/orders/<orderId>"
 -H "Content-Type: application/json"
 -H "Accept: application/json"
 -H "DOLA-API-KEY: dolaapikey"
@@ -166,50 +187,59 @@ curl "https://api.dola.me/api/orders/<orderID>"
 
 ```json
 {
-	"message": "Success",
-	"data": {
-		"orderId": "CvJSHoAqcQnPppggHBi8",
-		"name": "Omoefe Dukuye",
-		"email": "omoefe@dola.me",
-		"status": "canceled",
-		"address": {
-			"address1": "166 2nd Ave N",
-			"address2": "",
-			"city": "Nashville",
-			"state": "TN",
-			"country": "US",
-			"zipCode": "37201",
-			"insured": false,
-			"lastName": "Dukuye",
-			"firstName": "Omoefe",
-			"isResidential": true
-		},
-		"currency": "USD",
-		"tax": 996.7,
-		"dutiesAndImportFees": 100,
-		"shipping": 767,
-		"courier": "USPS - Priority Mail",
-		"totalValue": 11762,
-		"productCount": 1,
-		"cart": [
-			{
-				"name": "Hoodie (D)",
-				"price": 9999,
-				"sku": "dola-unicorn-hoodie-6",
-				"quantity": 1,
-				"variantId": "3649369483164",
-				"productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
-				"attributes": {
-					"exists": true
-				}
-			}
-		],
-		"reorder": false,
-		"weight": 0.45,
-		"tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
-		"isInternational": false,
-		"containsNonShippableItems": false
-	}
+  "message": "Success",
+  "data": {
+    "orderId": "CvJSHoAqcQnPppggHBi8",
+    "name": "Omoefe Dukuye",
+    "email": "omoefe@dola.me",
+    "status": "canceled",
+    "address": {
+      "address1": "166 2nd Ave N",
+      "address2": "",
+      "city": "Nashville",
+      "state": "TN",
+      "country": "US",
+      "zipCode": "37201",
+      "insured": false,
+      "lastName": "Dukuye",
+      "firstName": "Omoefe",
+      "isResidential": true
+    },
+    "currency": "USD",
+    "tax": 996.7,
+    "dutiesAndImportFees": 100,
+    "shipping": 767,
+    "trackingInfo": [
+      {
+        "id": "HSAPqHOLPJWLkiGMRuxK",
+        "trackingURL": "https://tracking-service.net/ksjdogiei32234kred"
+      },
+      {
+        "id": "PAkrEXgDwayoecUHSbRb",
+        "courier": "UPSS",
+        "trackingURL": "https://tracking-service.net/ksjdogiei32234kred",
+        "trackingId": "i3mdaj3i"
+      }
+    ],
+    "totalValue": 11762,
+    "productCount": 1,
+    "cart": [
+      {
+        "name": "Hoodie (D)",
+        "price": 9999,
+        "sku": "dola-unicorn-hoodie-6",
+        "quantity": 1,
+        "variantId": "3649369483164",
+        "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+        "attributes": {
+          "exists": true
+        }
+      }
+    ],
+    "reorder": false,
+    "weight": 0.45,
+    "isInternational": false
+  }
 }
 ```
 
@@ -217,138 +247,158 @@ This returns a single order given the order id is provided in the URL.
 
 **HTTP Request**
 
-`GET https://api.dola.me/api/orders/<orderID>`
+`GET https://api.dola.me/api/orders/<orderId>`
 
 **URL Parameters**
 
 | Parameter | Optional | Description         |
 | --------- | -------- | ------------------- |
-| orderID   | false    | The id of the order |
+| orderId   | false    | The id of the order |
 
 ## Update Order
 
 > For physical products, The update endpoint can be used like this:
 
 ```shell
-curl https://api.dola.me/api/orders/<orderID>
+curl https://api.dola.me/api/orders/<orderId>
 -X PATCH
 -H "Content-Type: application/json"
 -H "Accept: application/json"
 -H "DOLA-API-KEY: dolaapikey"
--d "{\"tracking_url\": \"https://tracking-service.net/ksjdogiei32234kred\"}"
+-d "{\"fulfill\":false,\"attachments\":{\"linkToInstructions\":\"https:\/\/product-usage-instructions.net\/ksjdogiei32234kred\"},\"originAddress\":{\"city\":\"bogota\"}}"
 ```
 
 > This returns a JSON response with this structure:
 
 ```json
 {
-	"message": "Success",
-	"data": {
-		"orderId": "CvJSHoAqcQnPppggHBi8",
-		"name": "Omoefe Dukuye",
-		"email": "omoefe@dola.me",
-		"status": "canceled",
-		"address": {
-			"address1": "166 2nd Ave N",
-			"address2": "",
-			"city": "Nashville",
-			"state": "TN",
-			"country": "US",
-			"zipCode": "37201",
-			"insured": false,
-			"lastName": "Dukuye",
-			"firstName": "Omoefe",
-			"isResidential": true
-		},
-		"currency": "USD",
-		"tax": 996.7,
-		"dutiesAndImportFees": 100,
-		"shipping": 767,
-		"courier": "USPS - Priority Mail",
-		"totalValue": 11762,
-		"productCount": 1,
-		"cart": [
-			{
-				"name": "Hoodie (D)",
-				"price": 9999,
-				"sku": "dola-unicorn-hoodie-6",
-				"quantity": 1,
-				"variantId": "3649369483164",
-				"productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
-				"attributes": {
-					"exists": true
-				}
-			}
-		],
-		"reorder": false,
-		"weight": 0.45,
-		"tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
-		"isInternational": false,
-		"containsNonShippableItems": false
-	}
+  "message": "Success",
+  "data": {
+    "orderId": "CvJSHoAqcQnPppggHBi8",
+    "name": "Omoefe Dukuye",
+    "email": "omoefe@dola.me",
+    "status": "created",
+    "address": {
+      "address1": "166 2nd Ave N",
+      "address2": "",
+      "city": "Bogota",
+      "state": "TN",
+      "country": "US",
+      "zipCode": "37201",
+      "insured": false,
+      "lastName": "Dukuye",
+      "firstName": "Omoefe",
+      "isResidential": true
+    },
+	"attachments": {
+      "linkToInstructions": "https://product-usage-instructions.net/ksjdogiei32234kred"
+    },
+    "currency": "USD",
+    "tax": 996.7,
+    "dutiesAndImportFees": 100,
+    "shipping": 767,
+    "trackingInfo": [
+      {
+		"id": "PAkrEXgDwayoecUHSbRb",
+        "courier": "DHL",
+		"trackingURL": "https://tracking-service.net/ksjdogiei32234kred",
+        "trackingId": "aaDAksddikdD"
+      }
+    ],
+    "totalValue": 11762,
+    "productCount": 1,
+    "cart": [
+      {
+        "name": "Hoodie (D)",
+        "price": 9999,
+        "sku": "dola-unicorn-hoodie-6",
+        "quantity": 1,
+        "variantId": "3649369483164",
+        "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+        "attributes": {
+          "exists": true
+        }
+      }
+    ],
+    "reorder": false,
+    "weight": 0.45,
+    "isInternational": false
+  }
 }
 ```
 
 > For non-shippable products, The update endpoint can be used like this:
 
 ```shell
-curl https://api.dola.me/api/orders/<orderID>
+curl https://api.dola.me/api/orders/<orderId>
 -X PATCH
 -H "Content-Type: application/json"
 -H "Accept: application/json"
 -H "DOLA-API-KEY: dolaapikey"
--d "{\"status\": \"fulfilled\", \"cart\": {\"downloadURL\":\"https://tracking-service.net/ksjdogiei32234kred\", \"sku\": \"dola-unicorn-hoodie-6\"}, }"
+-d "{\"fulfill\": true, \"attachments\": {\"downloadURL\":\"https:\/\/dowload-site.net\/ksjdogiei32234kred\"}}"
 ```
 
 > This returns a JSON response with this structure.
 
 ```json
 {
-	"message": "Success",
-	"data": {
-		"orderId": "CvJSHoAqcQnPppggHBi8",
-		"name": "Omoefe Dukuye",
-		"email": "omoefe@dola.me",
-		"status": "canceled",
-		"address": {
-			"address1": "166 2nd Ave N",
-			"address2": "",
-			"city": "Nashville",
-			"state": "TN",
-			"country": "US",
-			"zipCode": "37201",
-			"insured": false,
-			"lastName": "Dukuye",
-			"firstName": "Omoefe",
-			"isResidential": true
-		},
-		"currency": "USD",
-		"tax": 996.7,
-		"dutiesAndImportFees": 100,
-		"shipping": 767,
-		"courier": "USPS - Priority Mail",
-		"totalValue": 11762,
-		"productCount": 1,
-		"cart": [
-			{
-				"name": "Hoodie (D)",
-				"price": 9999,
-				"sku": "dola-unicorn-hoodie-6",
-				"quantity": 1,
-				"variantId": "3649369483164",
-				"productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
-				"downloadURL": "https://downloadURL-service-cdn/kf5ge234kred",
-				"attributes": {
-					"exists": true
-				}
-			}
-		],
-		"reorder": false,
-		"weight": 0.45,
-		"tracking_url": "https://tracking-service.net/ksjdogiei32234kred",
-		"isInternational": false,
-		"containsNonShippableItems": true
-	}
+  "message": "Success",
+  "data": {
+    "orderId": "CvJSHoAqcQnPppggHBi8",
+    "name": "Omoefe Dukuye",
+    "email": "omoefe@dola.me",
+    "status": "fulfilled",
+    "address": {
+      "address1": "166 2nd Ave N",
+      "address2": "",
+      "city": "Nashville",
+      "state": "TN",
+      "country": "US",
+      "zipCode": "37201",
+      "insured": false,
+      "lastName": "Dukuye",
+      "firstName": "Omoefe",
+      "isResidential": true
+    },
+	"attachments": {
+      "downloadURL": "https://dowload-site.net/ksjdogiei32234kred"
+    },
+    "currency": "USD",
+    "tax": 996.7,
+    "dutiesAndImportFees": 100,
+    "shipping": 767,
+    "trackingInfo": [
+      {
+        "id": "HSAPqHOLPJWLkiGMRuxK",
+        "trackingURL": "URL.TRACKY"
+      },
+      {
+        "id": "PAkrEXgDwayoecUHSbRb",
+        "courier": "UPSS",
+        "trackingURL": "URL.TRACKI",
+        "trackingId": "i3mdaj3i"
+      }
+    ],
+    "totalValue": 11762,
+    "productCount": 1,
+    "cart": [
+      {
+        "name": "Hoodie (D)",
+        "price": 9999,
+        "sku": "dola-unicorn-hoodie-6",
+        "quantity": 1,
+        "variantId": "3649369483164",
+        "productImage": "https://cdn.shopify.com/s/files/1/0481/1459/8044/products/dola-sample-product.jpg?v=1602787922",
+        "downloadURL": "https://downloadURL-service-cdn/kf5ge234kred",
+        "attributes": {
+          "exists": true
+        }
+      }
+    ],
+    "reorder": false,
+    "weight": 0.45,
+    "isInternational": false
+  }
 }
 ```
 
@@ -356,27 +406,20 @@ This marks an order as fulfilled, given the tracking url is in the request body.
 
 **HTTP Request**
 
-`PATCH https://api.dola.me/api/orders/<orderID>`
+`PATCH https://api.dola.me/api/orders/<orderId>`
 
 **Body Parameters**
 
-**CART UPDATE**
-
-| Parameter   | Optional | Description                                 |
-| ----------- | -------- | ------------------------------------------- |
-| downloadURL | false    | download url for downloadable product       |
-| sku         | false    | Stock keeping unit for downloadable product |
-
 | Parameter    | Optional | Description                                                            |
 | ------------ | -------- | ---------------------------------------------------------------------- |
-| tracking_url | true     | Tracking url for physical products                                     |
-| status       | true     | Order status; one of the following: `created`, `fulfilled`, `canceled` |
-| cart         | true     | CART UPDATE                                                            |
+| fulfill | false     | Marks an order as fulfilled and completes the transaction                  |
+| attachments     | true     | Arbitrary properties added to an object |
+| originAddress         | true     |  Updates the origin address on an order                       |
 
 ## Delete Order
 
 ```shell
-curl https://api.dola.me/api/orders/<orderID>
+curl https://api.dola.me/api/orders/<orderId>
 -X DELETE
 -H "Content-Type: application/json"
 -H "Accept: application/json"
@@ -389,13 +432,71 @@ This cancels and refunds an order.
 
 **HTTP Request**
 
-`DELETE https://api.dola.me/api/orders/<orderID>`
+`DELETE https://api.dola.me/api/orders/<orderId>`
 
 **URL Parameters**
 
 | Parameter | Optional | Description         |
 | --------- | -------- | ------------------- |
-| orderID   | false    | The id of the order |
+| orderId   | false    | The id of the order |
+
+## Add Tracking
+
+```shell
+curl https://api.dola.me/api/orders/<orderId>/trackingInfo
+-X POST
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+-d "{\"trackingURL\":\"https:\/\/tracking-service.net\/ksjdogiei32234kred\",\"courier\":\"DHL\",\"trackingId\":\"aaDAksddikdD\"}"
+```
+
+> This endpoint has no response body.
+
+This adds fulfilment and tracking info to an order(supports multiple partial fulfilments).
+
+**HTTP Request**
+
+`POST https://api.dola.me/api/orders/<orderId>/trackingInfo`
+
+**URL Parameters**
+
+| Parameter | Optional | Description         |
+| --------- | -------- | ------------------- |
+| orderId   | false    | The id of the order |
+
+**Body Parameters**
+
+| Parameter    | Optional | Description                                                            |
+| ------------ | -------- | ---------------------------------------------------------------------- |
+| trackingId | true     | Fulfilment Id provided by courier                |
+| trackingURL | false     | URL required to track fulfilment |
+| courier    | true     |  Courier fulfilling order  |
+
+## Delete Tracking
+
+```shell
+curl https://api.dola.me/api/orders/<orderId>/trackingInfo/<Id>
+-X Delete
+-H "Content-Type: application/json"
+-H "Accept: application/json"
+-H "DOLA-API-KEY: dolaapikey"
+```
+
+> This endpoint has no response body.
+
+This removes fulfilment and tracking info from an order.
+
+**HTTP Request**
+
+`DELETE https://api.dola.me/api/orders/<orderId>/trackingInfo/<Id>`
+
+**URL Parameters**
+
+| Parameter | Optional | Description                   |
+| --------- | -------- | ----------------------------- |
+| orderId   | false    | The id of the order           |
+| Id        | false    | The id of the tracking object |
 
 # Errors
 
